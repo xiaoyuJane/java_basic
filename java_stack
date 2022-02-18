@@ -1,0 +1,16 @@
+1、Java中的Stack类
+
+栈是一种后进先出(LIFO)的容器，常用的操作push/pop/peek。
+Java中Stack类从Vector类继承，底层是用数组实现的线程安全的栈。
+Java中用来表达栈的功能（push/pop/peek），更适用的是使用双端队列接口Deque，并用实现类ArrayDeque/LinkedList来进行初始化。
+Deque<Integer> stack = new ArrayDeque<>();
+Deque<Integer> stack = new LinkedList<>();
+
+2、不用Stack的原因
+（1）从性能上来说应该使用Deque代替Stack。
+Stack和Vector都是线程安全的，其实多数情况下并不需要做到线程安全，因此没有必要使用Stack。毕竟保证线程安全需要上锁，有额外的系统开销。
+（2）Stack从Vector继承是个历史遗留问题，JDK官方已建议优先使用Deque的实现类来代替Stack。
+Stack从Vector继承的一个副作用是，暴露了set/get方法，可以进行随机位置的访问，这与Stack只能从尾巴上进行增减的本意相悖。
+此外，Deque在转成ArrayList或者stream的时候保持了“后进先出”的语义，而Stack因为是从Vector继承，没有这个语义。
+
+https://cxymm.net/article/ITWUYI/112260400
